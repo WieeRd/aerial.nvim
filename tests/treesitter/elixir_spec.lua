@@ -1,0 +1,111 @@
+local util = require("tests.test_util")
+
+describe("treesitter elixir", function()
+  it("parses all symbols correctly", function()
+    util.test_file_symbols("treesitter", "./tests/treesitter/elixir_test.exs", {
+      {
+        kind = "Module",
+        name = "Example.Module",
+        level = 0,
+        lnum = 1,
+        col = 0,
+        end_lnum = 19,
+        end_col = 3,
+        children = {
+          {
+            kind = "Field",
+            name = ":value",
+            level = 1,
+            lnum = 2,
+            col = 2,
+            end_lnum = 2,
+            end_col = 26,
+          },
+          {
+            kind = "Function",
+            name = "public_function",
+            level = 1,
+            lnum = 4,
+            col = 2,
+            end_lnum = 5,
+            end_col = 5,
+          },
+          {
+            kind = "Function",
+            name = "private_function",
+            level = 1,
+            lnum = 7,
+            col = 2,
+            end_lnum = 8,
+            end_col = 5,
+          },
+          {
+            kind = "Function",
+            name = "public_guard",
+            level = 1,
+            lnum = 10,
+            col = 2,
+            end_lnum = 10,
+            end_col = 42,
+          },
+          {
+            kind = "Function",
+            name = "private_guard",
+            level = 1,
+            lnum = 12,
+            col = 2,
+            end_lnum = 12,
+            end_col = 43,
+          },
+          {
+            kind = "Function",
+            name = "public_macro",
+            level = 1,
+            lnum = 14,
+            col = 2,
+            end_lnum = 15,
+            end_col = 5,
+          },
+          {
+            kind = "Function",
+            name = "private_macro",
+            level = 1,
+            lnum = 17,
+            col = 2,
+            end_lnum = 18,
+            end_col = 5,
+          },
+        },
+      },
+      {
+        kind = "Interface",
+        name = "Example.Behaviour",
+        level = 0,
+        lnum = 21,
+        col = 0,
+        end_lnum = 23,
+        end_col = 3,
+        children = {
+          {
+            kind = "Function",
+            name = "example_function",
+            level = 1,
+            lnum = 22,
+            col = 2,
+            end_lnum = 22,
+            end_col = 46,
+          },
+        },
+      },
+      {
+        kind = "Struct",
+        name = "Example.Struct",
+        level = 0,
+        lnum = 25,
+        col = 0,
+        end_lnum = 27,
+        end_col = 3,
+      },
+    })
+  end)
+end)

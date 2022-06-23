@@ -61,6 +61,34 @@ local function set_end_range(bufnr, items, last_line)
   end
 end
 
+M.elixir = {
+  kind_map = {
+    callback = "Function",
+    def = "Function",
+    defguard = "Function",
+    defmacro = "Function",
+    defmacrop = "Function",
+    defmodule = "Module",
+    defp = "Function",
+    defstruct = "Struct",
+    module_attribute = "Field",
+  },
+  postprocess = function(bufnr, item, match)
+    local identifier = (utils.get_at_path(match, "identifier") or {}).node
+    if identifier then
+      local name = get_node_text(identifier, bufnr) or "<parse error>"
+      item.kind = M.elixir.kind_map[name] or item.kind
+      if name == "callback" and item.parent then
+        item.parent.kind = "Interface"
+      end
+      if name == "defstruct" and item.parent then
+        item.parent.kind = "Struct"
+        return false
+      end
+    end
+  end,
+}
+
 M.markdown = {
   get_parent = function(stack, match, node)
     local level_node = (utils.get_at_path(match, "level") or {}).node
